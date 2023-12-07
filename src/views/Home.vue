@@ -138,6 +138,14 @@ export default {
       setTableView: "setTableView",
     }),
     formatDate,
+    //Сброс фильтров, пагинации и сортировки
+    clearAll(){
+      store.commit("SET_PAGE", 0);
+      store.commit("SET_FULL_NAME", null);
+      store.commit("SET_GENDER", null);
+      store.commit("SET_NATION", null);
+      this.setSort("clear");
+    },
     //Фильтрация опций фильтрации
     filterOptions(type) {
       if (this.getCopiedContacts === null && this.getContacts)
@@ -171,12 +179,7 @@ export default {
     },
     //Обновление списка контактов
     refresh() {
-      //Сброс фильтров, пагинации и сортировки
-      store.commit("SET_PAGE", 0);
-      store.commit("SET_FULL_NAME", null);
-      store.commit("SET_GENDER", null);
-      store.commit("SET_NATION", null);
-      this.setSort("clear");
+      this.clearAll();
       //Получение обновленного списка контактов по api
       this.setContacts();
     },
@@ -290,6 +293,7 @@ export default {
     },
   },
   mounted() {
+    this.clearAll();
     this.setContacts();
   },
 };
